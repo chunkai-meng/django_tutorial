@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-z_5#n7+h#o#x&ko&ktj$s1162)nx)p0d@skpjq7wmex@h6wlaa
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_cas_ng',
     'customers'
 ]
 
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_cas_ng.middleware.CASMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -101,6 +103,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    # 'django.contrib.auth.backends.ModelBackend',
+    'django_cas_ng.backends.CASBackend',
+)
+
 CORS_ALLOW_ALL_ORIGINS: True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -140,3 +147,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# CAS
+CAS_SERVER_URL = 'http://test-cas.waipareira.com/cas/'
+CAS_VERSION = '3'
+CAS_APPLY_ATTRIBUTES_TO_USER = True
+CAS_IGNORE_REFERER = True
+CAS_REDIRECT_URL = '/'
